@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Pod/Classes/**/*'
 
+  s.ios.dependency 'Firebase', '~> 3.2.0'
   s.ios.dependency 'Firebase/Auth', '~> 3.2.0'
   s.ios.dependency 'Firebase/Database', '~> 3.2.0'
   s.dependency 'RxSwift', '~> 2.5.0'
