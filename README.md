@@ -109,8 +109,23 @@ I didn't create an observeSingleEvent rx method. Simply just do a `take(1)` on a
 
 These are relatively straight forward. The operate exactly like their native Firebase equivalents:
 
-- `rx_setValues`
-- `rx_updateChildValues`
+```swift
+    rx_updateChildValues(values: [NSObject : AnyObject]) -> Observable<FIRDatabaseReference>
+
+    rx_setValue(value: AnyObject?, priority: AnyObject? = default) -> Observable<FIRDatabaseReference>
+
+    rx_setPriority(priority: AnyObject?) -> Observable<FIRDatabaseReference>
+
+    rx_removeValue() -> Observable<FIRDatabaseReference>
+
+    rx_runTransactionBlock(block: (FIRMutableData -> FIRTransactionResult), withLocalEvents localEvents: Bool = default) -> Observable<(Bool, FIRDataSnapshot?)>
+
+    rx_onDisconnectSetValue(value: AnyObject?, priority: AnyObject? = default) -> Observable<FIRDatabaseReference>
+
+    rx_onDisconnectUpdateValue(values: [NSObject : AnyObject]) -> Observable<FIRDatabaseReference>
+
+    rx_onDisconnectRemoveValue() -> Observable<FIRDatabaseReference>
+```
 
 ## Authentication
 
@@ -118,7 +133,7 @@ You can easily observe your authentication state:
 
 ```swift
     let auth = FIRAuth.auth()?.rx_authState()
-        .subscribeNext{ user in
+        .subscribeNext { user in
             if let user == user {
                 print("You're logged in, user is not nil")
             }else{
@@ -159,6 +174,7 @@ You can check if a snapshot has a value or not by these two extension methods. T
 ## Author
 
 Maximilian Alexander, mbalex99@gmail.com
+
 Rewritten for Firebase SDK 3.2.0 by Zsolt Váradi, zsolt.varadi@outlook.com
 
 ## License
