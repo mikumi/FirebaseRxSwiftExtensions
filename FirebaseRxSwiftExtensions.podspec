@@ -24,9 +24,9 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'
-
-  s.ios.dependency 'Firebase', '~> 3.2.0'
-  s.ios.dependency 'Firebase/Auth', '~> 3.2.0'
-  s.ios.dependency 'Firebase/Database', '~> 3.2.0'
+  s.platform = :ios
+  s.dependency 'Firebase/Auth', '~> 3.2.0'
+  s.dependency 'Firebase/Core', '~> 3.2.0'
+  s.dependency 'Firebase/Database', '~> 3.2.0'
   s.dependency 'RxSwift', '~> 2.5.0'
 end
