@@ -32,6 +32,7 @@ Pod::Spec.new do |s|
   s.dependency 'RxSwift', '~> 2.5.0'
   s.pod_target_xcconfig = {
     'FRAMEWORK_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/**',
-    'OTHER_LDFLAGS'          => '$(inherited) -undefined dynamic_lookup'
+    'OTHER_LDFLAGS'          => '$(inherited) -undefined dynamic_lookup',
+    'ENABLE_BITCODE'         => 'NO'
   }
 end
