@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.summary          = "Untangle your messy Firebase code with RxSwift Extension Methods"
 
   s.description      = "Firebase is a block or closure based API, unfortunately doing anything robust will take a lot of nesting.
- This makes your code get out hand very fast. RxSwift 2.5 or higher is required. Swift 2 and XCode 7.1 are required."
+ This makes your code get out of hand very fast. RxSwift 2.5 or higher is required. Swift 2 and XCode 7.1 are required."
 
   s.homepage         = "https://github.com/RxSwiftCommunity/FirebaseRxSwiftExtensions.git"
   s.license          = 'MIT'
@@ -24,9 +24,14 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'
-  s.platform = :ios
+  s.platform = :ios, '8.0'
+
   s.dependency 'Firebase/Auth', '~> 3.2.0'
   s.dependency 'Firebase/Core', '~> 3.2.0'
   s.dependency 'Firebase/Database', '~> 3.2.0'
   s.dependency 'RxSwift', '~> 2.5.0'
+  s.pod_target_xcconfig = {
+    'FRAMEWORK_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/**',
+    'OTHER_LDFLAGS'          => '$(inherited) -undefined dynamic_lookup'
+  }
 end
