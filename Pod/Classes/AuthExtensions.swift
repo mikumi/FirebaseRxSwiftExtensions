@@ -6,7 +6,7 @@
 import FirebaseAuth
 import RxSwift
 
-extension FIRAuth {
+public extension FIRAuth {
     // MARK: - Observable authentication state
     var rx_authState: Observable<FIRUser?> {
         get {

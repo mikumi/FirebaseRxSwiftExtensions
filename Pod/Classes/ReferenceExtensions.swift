@@ -6,7 +6,7 @@
 import FirebaseDatabase
 import RxSwift
 
-extension FIRDatabaseReference {
+public extension FIRDatabaseReference {
     // MARK: - Updating references
     func rx_updateChildValues(values: [NSObject: AnyObject]) -> Observable<FIRDatabaseReference> {
         return Observable.create { (observer: AnyObserver<FIRDatabaseReference>) in

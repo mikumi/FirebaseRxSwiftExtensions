@@ -6,7 +6,7 @@
 import FirebaseDatabase
 import RxSwift
 
-extension FIRDatabaseQuery {
+public extension FIRDatabaseQuery {
     func rx_observeEventType(eventType: FIRDataEventType) -> Observable<FIRDataSnapshot> {
         return Observable.create { (observer : AnyObserver<FIRDataSnapshot>) -> Disposable in
             let handle = self.observeEventType(eventType,
