@@ -31,8 +31,7 @@ Pod::Spec.new do |s|
   s.dependency 'Firebase/Database', '~> 3.6.0'
   s.dependency 'RxSwift', '~> 3.0.0-beta.1'
   s.pod_target_xcconfig = {
-    'FRAMEWORK_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/**',
-    'OTHER_LDFLAGS'          => '$(inherited) -undefined dynamic_lookup',
-    'ENABLE_BITCODE'         => 'NO'
+   'FRAMEWORK_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/**',
+   'OTHER_LDFLAGS'          => '$(inherited) -undefined dynamic_lookup'
   }
 end
