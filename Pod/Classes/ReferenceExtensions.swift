@@ -10,7 +10,7 @@ public extension FIRDatabaseReference {
     // MARK: - Updating references
     func rx_updateChildValues(values: [NSObject: AnyObject]) -> Observable<FIRDatabaseReference> {
         return Observable.create { (observer: AnyObserver<FIRDatabaseReference>) in
-            self.updateChildValues(values, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer))
+            self.updateChildValues(values, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
             return NopDisposable.instance
         }
     }
@@ -18,9 +18,9 @@ public extension FIRDatabaseReference {
     func rx_setValue(value: AnyObject?, priority: AnyObject? = nil) -> Observable<FIRDatabaseReference> {
         return Observable.create { (observer: AnyObserver<FIRDatabaseReference>) -> Disposable in
             if let priority = priority {
-                self.setValue(value, andPriority: priority, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer))
+                self.setValue(value, andPriority: priority, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
             } else {
-                self.setValue(value, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer))
+                self.setValue(value, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
             }
 
             return NopDisposable.instance
@@ -29,20 +29,20 @@ public extension FIRDatabaseReference {
 
     func rx_setPriority(priority: AnyObject?) -> Observable<FIRDatabaseReference> {
         return Observable.create { (observer: AnyObserver<FIRDatabaseReference>) in
-            self.setPriority(priority, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer))
+            self.setPriority(priority, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
             return NopDisposable.instance
         }
     }
 
     func rx_removeValue() -> Observable<FIRDatabaseReference> {
         return Observable.create { (observer: AnyObserver<FIRDatabaseReference>) in
-            self.removeValueWithCompletionBlock(FIRDatabaseReference.rx_setCallback(observer))
+            self.removeValue(completionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
             return NopDisposable.instance
         }
     }
 
     // MARK: - Transactions
-    func rx_runTransactionBlock(block: (FIRMutableData -> FIRTransactionResult), withLocalEvents localEvents: Bool = false) -> Observable<(Bool, FIRDataSnapshot?)> {
+    func rx_runTransactionBlock(block: @escaping ((FIRMutableData) -> FIRTransactionResult), withLocalEvents localEvents: Bool = false) -> Observable<(Bool, FIRDataSnapshot?)> {
         return Observable.create { (observer: AnyObserver<(Bool, FIRDataSnapshot?)>) in
             self.runTransactionBlock(block, andCompletionBlock: { (error, isCommitted, snapshot) in
                 if let error = error {
@@ -63,12 +63,12 @@ public extension FIRDatabaseReference {
             if let priority = priority {
                 self.onDisconnectSetValue(value,
                     andPriority: priority,
-                    withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer))
+                    withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
 
                 return NopDisposable.instance
             } else {
                 self.onDisconnectSetValue(value,
-                    withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer))
+                    withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
 
                 return NopDisposable.instance
             }
@@ -78,7 +78,7 @@ public extension FIRDatabaseReference {
     func rx_onDisconnectUpdateValue(values: [NSObject: AnyObject]) -> Observable<FIRDatabaseReference> {
         return Observable.create { (observer) -> Disposable in
             self.onDisconnectUpdateChildValues(values,
-                withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer))
+                withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
 
             return NopDisposable.instance
         }
@@ -86,14 +86,14 @@ public extension FIRDatabaseReference {
 
     func rx_onDisconnectRemoveValue() -> Observable<FIRDatabaseReference> {
         return Observable.create { (observer) -> Disposable in
-            self.onDisconnectRemoveValueWithCompletionBlock(FIRDatabaseReference.rx_setCallback(observer))
+            self.onDisconnectRemoveValue(completionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
             return NopDisposable.instance
         }
     }
 
     // MARK: - Helper methods
-    private static func rx_setCallback(observer: AnyObserver<FIRDatabaseReference>) -> ((NSError?, FIRDatabaseReference) -> Void) {
-        return { (error: NSError?, reference: FIRDatabaseReference) in
+    private static func rx_setCallback(observer: AnyObserver<FIRDatabaseReference>) -> ((Error?, FIRDatabaseReference) -> Void) {
+        return { (error: Error?, reference: FIRDatabaseReference) in
             if let error = error {
                 observer.onError(error)
             } else {

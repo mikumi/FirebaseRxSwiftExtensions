@@ -11,12 +11,12 @@ public extension FIRAuth {
     var rx_authState: Observable<FIRUser?> {
         get {
             return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
-                let handle = self.addAuthStateDidChangeListener({ (_, user) in
+                let handle = self.addStateDidChangeListener({ (_, user) in
                     observer.onNext(user)
                 })
 
                 return AnonymousDisposable { [weak self] in
-                    self?.removeAuthStateDidChangeListener(handle)
+                    self?.removeStateDidChangeListener(handle)
                 }
             }
         }
@@ -25,28 +25,28 @@ public extension FIRAuth {
     // MARK: - Signing in
     func rx_signInWithEmail(email: String, password: String) -> Observable<FIRUser?> {
         return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
-            self.signInWithEmail(email, password: password, completion: FIRAuth.rx_authCallback(observer))
+            self.signIn(withEmail: email, password: password, completion: FIRAuth.rx_authCallback(observer: observer))
             return NopDisposable.instance
         }
     }
 
     func rx_signInAnonymously() -> Observable<FIRUser?> {
         return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
-            self.signInAnonymouslyWithCompletion(FIRAuth.rx_authCallback(observer))
+            self.signInAnonymously(completion: FIRAuth.rx_authCallback(observer: observer))
             return NopDisposable.instance
         }
     }
 
     func rx_signInWithCredential(credential: FIRAuthCredential) -> Observable<FIRUser?> {
         return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
-            self.signInWithCredential(credential, completion: FIRAuth.rx_authCallback(observer))
+            self.signIn(with: credential, completion: FIRAuth.rx_authCallback(observer: observer))
             return NopDisposable.instance
         }
     }
 
     func rx_signInWithCustomToken(customToken: String) -> Observable<FIRUser?> {
         return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
-            self.signInWithCustomToken(customToken, completion: FIRAuth.rx_authCallback(observer))
+            self.signIn(withCustomToken: customToken, completion: FIRAuth.rx_authCallback(observer: observer))
             return NopDisposable.instance
         }
     }
@@ -54,14 +54,14 @@ public extension FIRAuth {
     // MARK: - Registering and resetting password
     func rx_createUserWithEmail(email: String, password: String) -> Observable<FIRUser?> {
         return Observable.create { (observer : AnyObserver<FIRUser?>) -> Disposable in
-            self.createUserWithEmail(email, password: password, completion: FIRAuth.rx_authCallback(observer))
+            self.createUser(withEmail: email, password: password, completion: FIRAuth.rx_authCallback(observer: observer))
             return NopDisposable.instance
         }
     }
 
     func rx_sendPasswordResetWithEmail(email: String) -> Observable<Void> {
         return Observable.create { (observer: AnyObserver<Void>) -> Disposable in
-            self.sendPasswordResetWithEmail(email) { (error) in
+            self.sendPasswordReset(withEmail: email) { (error) in
                 if let error = error {
                     observer.onError(error)
                 } else {
@@ -92,7 +92,7 @@ public extension FIRAuth {
     // MARK: - Multi-provider support
     func rx_providersForEmail(email: String) -> Observable<[String]?> {
         return Observable.create { (observer: AnyObserver<[String]?>) -> Disposable in
-            self.fetchProvidersForEmail(email) { (providers, error) in
+            self.fetchProviders(forEmail: email) { (providers, error) in
                 if let error = error {
                     observer.onError(error)
                 } else {
@@ -107,7 +107,7 @@ public extension FIRAuth {
 
     // MARK: - Helper methods
     private static func rx_authCallback(observer: AnyObserver<FIRUser?>) -> FIRAuthResultCallback {
-        return { (user: FIRUser?, error: NSError?) in
+        return { (user: FIRUser?, error: Error?) in
             if let error = error {
                 observer.onError(error)
             } else {
