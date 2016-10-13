@@ -22,7 +22,7 @@ public extension FIRDatabaseQuery {
         }
     }
 
-    func rx_observeEventType(eventType: FIRDataEventType) -> Observable<(FIRDataSnapshot, String?)> {
+    func rx_observeEventTypeAndPreviousSibling(eventType: FIRDataEventType) -> Observable<(FIRDataSnapshot, String?)> {
         return Observable.create { (observer : AnyObserver<(FIRDataSnapshot, String?)>) -> Disposable in
             let handle = self.observe(eventType,
                                       andPreviousSiblingKeyWith: { (snapshot, key) in
