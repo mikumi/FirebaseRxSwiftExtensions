@@ -16,7 +16,7 @@ public extension FIRDatabaseQuery {
                     observer.onError(error)
                 })
 
-            return AnonymousDisposable { [weak self] in
+            return Disposables.create { [weak self] in
                 self?.removeObserver(withHandle: handle)
             }
         }
@@ -31,7 +31,7 @@ public extension FIRDatabaseQuery {
                     observer.onError(error)
             })
 
-            return AnonymousDisposable { [weak self] in
+            return Disposables.create { [weak self] in
                 self?.removeObserver(withHandle: handle)
             }
         }

@@ -11,7 +11,7 @@ public extension FIRDatabaseReference {
     func rx_updateChildValues(values: [NSObject: AnyObject]) -> Observable<FIRDatabaseReference> {
         return Observable.create { (observer: AnyObserver<FIRDatabaseReference>) in
             self.updateChildValues(values, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
@@ -23,21 +23,21 @@ public extension FIRDatabaseReference {
                 self.setValue(value, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
             }
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
     func rx_setPriority(priority: AnyObject?) -> Observable<FIRDatabaseReference> {
         return Observable.create { (observer: AnyObserver<FIRDatabaseReference>) in
             self.setPriority(priority, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
     func rx_removeValue() -> Observable<FIRDatabaseReference> {
         return Observable.create { (observer: AnyObserver<FIRDatabaseReference>) in
             self.removeValue(completionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
@@ -53,7 +53,7 @@ public extension FIRDatabaseReference {
                 }
             }, withLocalEvents: localEvents)
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
@@ -65,12 +65,12 @@ public extension FIRDatabaseReference {
                     andPriority: priority,
                     withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
 
-                return NopDisposable.instance
+                return Disposables.create()
             } else {
                 self.onDisconnectSetValue(value,
                     withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
 
-                return NopDisposable.instance
+                return Disposables.create()
             }
         }
     }
@@ -80,14 +80,14 @@ public extension FIRDatabaseReference {
             self.onDisconnectUpdateChildValues(values,
                 withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
     func rx_onDisconnectRemoveValue() -> Observable<FIRDatabaseReference> {
         return Observable.create { (observer) -> Disposable in
             self.onDisconnectRemoveValue(completionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 

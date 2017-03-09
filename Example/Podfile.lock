@@ -1,39 +1,43 @@
 PODS:
-  - Firebase/Analytics (3.2.0):
-    - FirebaseAnalytics (= 3.2.0)
-  - Firebase/Auth (3.2.0):
-    - Firebase/Analytics (= 3.2.0)
-    - FirebaseAuth (= 3.0.2)
-  - Firebase/Core (3.2.0):
-    - Firebase/Analytics (= 3.2.0)
-  - Firebase/Database (3.2.0):
-    - Firebase/Analytics (= 3.2.0)
-    - FirebaseDatabase (= 3.0.1)
-  - FirebaseAnalytics (3.2.0):
+  - Firebase/Auth (3.14.0):
+    - Firebase/Core
+    - FirebaseAuth (= 3.1.1)
+  - Firebase/Core (3.14.0):
+    - FirebaseAnalytics (= 3.7.0)
+    - FirebaseCore (= 3.5.1)
+  - Firebase/Database (3.14.0):
+    - Firebase/Core
+    - FirebaseDatabase (= 3.1.2)
+  - FirebaseAnalytics (3.7.0):
+    - FirebaseCore (~> 3.5)
     - FirebaseInstanceID (~> 1.0)
-    - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleSymbolUtilities (~> 1.1)
-    - GoogleUtilities (~> 1.3)
-  - FirebaseAuth (3.0.2):
-    - FirebaseAnalytics (~> 3.2)
-    - GoogleNetworkingUtilities (~> 1.2)
-    - GoogleUtilities (~> 1.3)
-  - FirebaseDatabase (3.0.1):
-    - FirebaseAnalytics (~> 3.2)
-  - FirebaseInstanceID (1.0.6)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseAuth (3.1.1):
+    - FirebaseAnalytics (~> 3.7)
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - FirebaseCore (3.5.1):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseDatabase (3.1.2):
+    - FirebaseAnalytics (~> 3.7)
+  - FirebaseInstanceID (1.0.9)
   - FirebaseRxSwiftExtensions (3.0.0):
-    - Firebase/Auth (~> 3.2.0)
-    - Firebase/Core (~> 3.2.0)
-    - Firebase/Database (~> 3.2.0)
-    - RxSwift (~> 2.5.0)
-  - GoogleInterchangeUtilities (1.2.1):
-    - GoogleSymbolUtilities (~> 1.0)
-  - GoogleNetworkingUtilities (1.2.1):
-    - GoogleSymbolUtilities (~> 1.0)
-  - GoogleSymbolUtilities (1.1.1)
-  - GoogleUtilities (1.3.1):
-    - GoogleSymbolUtilities (~> 1.0)
-  - RxSwift (2.5.0)
+    - Firebase/Auth
+    - Firebase/Core
+    - Firebase/Database
+    - RxSwift (~> 3.2)
+  - GoogleToolboxForMac/DebugUtils (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.1):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.1)
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
+  - GTMSessionFetcher/Core (1.1.8)
+  - RxSwift (3.2.0)
 
 DEPENDENCIES:
   - FirebaseRxSwiftExtensions (from `../`)
@@ -43,18 +47,17 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Firebase: 6d4012da1598732a2b43f16d8355eca90f94ed59
-  FirebaseAnalytics: 6f75b04e6bfb8e0b6e9ef298e04c24eea3b13863
-  FirebaseAuth: 94b851fc345ce98036dfedfdc2eddeaef8fa3b4c
-  FirebaseDatabase: 34301d11621a83546f39f670d256477ba6f7fcea
-  FirebaseInstanceID: d014d574053a2fe84478f12f7bae96979e7051bb
-  FirebaseRxSwiftExtensions: 86ef4ef1ff7b34c71ae14bfc76bd0a5e727fea97
-  GoogleInterchangeUtilities: def8415a862effc67d549d5b5b0b9c7a2f97d4de
-  GoogleNetworkingUtilities: 3e83269048cfb498dc7ec83ab36813360965c74f
-  GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
-  GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
-  RxSwift: 402b41a50e922a0368fc14cb3bc9f4427920e8ae
+  Firebase: 85a581fb04e44f63ae9f4fbc8d6dabf4a4c18653
+  FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
+  FirebaseAuth: cc8a1824170adbd351edb7f994490a3fb5c18be6
+  FirebaseCore: 225d40532489835a034b8f4e2c9c87fbf4f615a2
+  FirebaseDatabase: 05c96d7b43a7368dc91c07791adb49683e1738d1
+  FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
+  FirebaseRxSwiftExtensions: 1568c84d1c25b4498c6b5ea43573d82048990de0
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
+  RxSwift: 46574f70d416b7923c237195939cc488a7fbf3a0
 
 PODFILE CHECKSUM: 7f471713dd4caa40fcc6cce128547a5d8f2bbef3
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.2.0

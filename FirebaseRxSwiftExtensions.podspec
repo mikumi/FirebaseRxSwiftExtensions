@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   s.dependency 'Firebase/Auth'
   s.dependency 'Firebase/Core'
   s.dependency 'Firebase/Database'
-  s.dependency 'RxSwift', '~> 3.0.0-beta.2'
+  s.dependency 'RxSwift', '~> 3.2'
   s.pod_target_xcconfig = {
    'FRAMEWORK_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/**',
    'OTHER_LDFLAGS'          => '$(inherited) -undefined dynamic_lookup'

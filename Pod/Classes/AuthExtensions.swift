@@ -15,7 +15,7 @@ public extension FIRAuth {
                     observer.onNext(user)
                 })
 
-                return AnonymousDisposable { [weak self] in
+                return Disposables.create { [weak self] in
                     self?.removeStateDidChangeListener(handle)
                 }
             }
@@ -26,28 +26,28 @@ public extension FIRAuth {
     func rx_signInWithEmail(email: String, password: String) -> Observable<FIRUser?> {
         return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
             self.signIn(withEmail: email, password: password, completion: FIRAuth.rx_authCallback(observer: observer))
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
     func rx_signInAnonymously() -> Observable<FIRUser?> {
         return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
             self.signInAnonymously(completion: FIRAuth.rx_authCallback(observer: observer))
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
     func rx_signInWithCredential(credential: FIRAuthCredential) -> Observable<FIRUser?> {
         return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
             self.signIn(with: credential, completion: FIRAuth.rx_authCallback(observer: observer))
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
     func rx_signInWithCustomToken(customToken: String) -> Observable<FIRUser?> {
         return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
             self.signIn(withCustomToken: customToken, completion: FIRAuth.rx_authCallback(observer: observer))
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
@@ -55,7 +55,7 @@ public extension FIRAuth {
     func rx_createUserWithEmail(email: String, password: String) -> Observable<FIRUser?> {
         return Observable.create { (observer : AnyObserver<FIRUser?>) -> Disposable in
             self.createUser(withEmail: email, password: password, completion: FIRAuth.rx_authCallback(observer: observer))
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
@@ -70,7 +70,7 @@ public extension FIRAuth {
                 }
             }
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
@@ -85,7 +85,7 @@ public extension FIRAuth {
                 observer.onError(error)
             }
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
@@ -101,7 +101,7 @@ public extension FIRAuth {
                 }
             }
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
