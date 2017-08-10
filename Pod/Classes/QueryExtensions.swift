@@ -6,9 +6,9 @@
 import FirebaseDatabase
 import RxSwift
 
-public extension FIRDatabaseQuery {
-    func rx_observeEventType(eventType: FIRDataEventType) -> Observable<FIRDataSnapshot> {
-        return Observable.create { (observer : AnyObserver<FIRDataSnapshot>) -> Disposable in
+public extension DatabaseQuery {
+    func rx_observeEventType(eventType: DataEventType) -> Observable<DataSnapshot> {
+        return Observable.create { (observer : AnyObserver<DataSnapshot>) -> Disposable in
             let handle = self.observe(eventType,
                                       with: { (snapshot) in
                                         observer.onNext(snapshot)
@@ -22,8 +22,8 @@ public extension FIRDatabaseQuery {
         }
     }
 
-    func rx_observeEventTypeAndPreviousSibling(eventType: FIRDataEventType) -> Observable<(FIRDataSnapshot, String?)> {
-        return Observable.create { (observer : AnyObserver<(FIRDataSnapshot, String?)>) -> Disposable in
+    func rx_observeEventTypeAndPreviousSibling(eventType: DataEventType) -> Observable<(DataSnapshot, String?)> {
+        return Observable.create { (observer : AnyObserver<(DataSnapshot, String?)>) -> Disposable in
             let handle = self.observe(eventType,
                                       andPreviousSiblingKeyWith: { (snapshot, key) in
                                         observer.onNext((snapshot, key))

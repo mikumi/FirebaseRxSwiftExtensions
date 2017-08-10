@@ -6,11 +6,11 @@
 import FirebaseAuth
 import RxSwift
 
-public extension FIRAuth {
+public extension Auth {
     // MARK: - Observable authentication state
-    var rx_authState: Observable<FIRUser?> {
+    var rx_authState: Observable<User?> {
         get {
-            return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
+            return Observable.create { (observer: AnyObserver<User?>) -> Disposable in
                 let handle = self.addStateDidChangeListener({ (_, user) in
                     observer.onNext(user)
                 })
@@ -23,38 +23,38 @@ public extension FIRAuth {
     }
 
     // MARK: - Signing in
-    func rx_signInWithEmail(email: String, password: String) -> Observable<FIRUser?> {
-        return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
-            self.signIn(withEmail: email, password: password, completion: FIRAuth.rx_authCallback(observer: observer))
+    func rx_signInWithEmail(email: String, password: String) -> Observable<User?> {
+        return Observable.create { (observer: AnyObserver<User?>) -> Disposable in
+            self.signIn(withEmail: email, password: password, completion: Auth.rx_authCallback(observer: observer))
             return Disposables.create()
         }
     }
 
-    func rx_signInAnonymously() -> Observable<FIRUser?> {
-        return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
-            self.signInAnonymously(completion: FIRAuth.rx_authCallback(observer: observer))
+    func rx_signInAnonymously() -> Observable<User?> {
+        return Observable.create { (observer: AnyObserver<User?>) -> Disposable in
+            self.signInAnonymously(completion: Auth.rx_authCallback(observer: observer))
             return Disposables.create()
         }
     }
 
-    func rx_signInWithCredential(credential: FIRAuthCredential) -> Observable<FIRUser?> {
-        return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
-            self.signIn(with: credential, completion: FIRAuth.rx_authCallback(observer: observer))
+    func rx_signInWithCredential(credential: AuthCredential) -> Observable<User?> {
+        return Observable.create { (observer: AnyObserver<User?>) -> Disposable in
+            self.signIn(with: credential, completion: Auth.rx_authCallback(observer: observer))
             return Disposables.create()
         }
     }
 
-    func rx_signInWithCustomToken(customToken: String) -> Observable<FIRUser?> {
-        return Observable.create { (observer: AnyObserver<FIRUser?>) -> Disposable in
-            self.signIn(withCustomToken: customToken, completion: FIRAuth.rx_authCallback(observer: observer))
+    func rx_signInWithCustomToken(customToken: String) -> Observable<User?> {
+        return Observable.create { (observer: AnyObserver<User?>) -> Disposable in
+            self.signIn(withCustomToken: customToken, completion: Auth.rx_authCallback(observer: observer))
             return Disposables.create()
         }
     }
 
     // MARK: - Registering and resetting password
-    func rx_createUserWithEmail(email: String, password: String) -> Observable<FIRUser?> {
-        return Observable.create { (observer : AnyObserver<FIRUser?>) -> Disposable in
-            self.createUser(withEmail: email, password: password, completion: FIRAuth.rx_authCallback(observer: observer))
+    func rx_createUserWithEmail(email: String, password: String) -> Observable<User?> {
+        return Observable.create { (observer : AnyObserver<User?>) -> Disposable in
+            self.createUser(withEmail: email, password: password, completion: Auth.rx_authCallback(observer: observer))
             return Disposables.create()
         }
     }
@@ -106,8 +106,8 @@ public extension FIRAuth {
     }
 
     // MARK: - Helper methods
-    private static func rx_authCallback(observer: AnyObserver<FIRUser?>) -> FIRAuthResultCallback {
-        return { (user: FIRUser?, error: Error?) in
+    private static func rx_authCallback(observer: AnyObserver<User?>) -> AuthResultCallback {
+        return { (user: User?, error: Error?) in
             if let error = error {
                 observer.onError(error)
             } else {

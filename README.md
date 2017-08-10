@@ -59,12 +59,12 @@ For example:
 
 ### Observe a Snapshot
 
-The `rx_observeEventType(eventType: FIRDataEventType)` method observes a Firebase reference or a query for its snapshot.
+The `rx_observeEventType(eventType: DataEventType)` method observes a Firebase reference or a query for its snapshot.
 
 ```swift
-    let query = FIRDatabase.database().reference(...).queryOrderedByChild("height")
+    let query = Database.database().reference(...).queryOrderedByChild("height")
     query.rx_observeEventType(.ChildAdded)
-        .subscribeNext { (snapshot: FIRDataSnapshot) in
+        .subscribeNext { (snapshot: DataSnapshot) in
             //do something with your snapshot
         }
 ```
@@ -72,10 +72,10 @@ The `rx_observeEventType(eventType: FIRDataEventType)` method observes a Firebas
 To listen for a snapshot and it's siblingKey. This is useful events like `.ChildMoved` and `.ChildChanged`:
 
 ```swift
-    let query = FIRDatabase.database().reference(...).queryOrderedByChild("height")
+    let query = Database.database().reference(...).queryOrderedByChild("height")
 
     query.rx_observeEventType(.ChildRemoved)
-        .subscribeNext{ (tuple: (FIRDataSnapshot, String?) in
+        .subscribeNext{ (tuple: (DataSnapshot, String?) in
             // The tuple contains the snapshot and the optional sibling key
         }
 ```
@@ -83,10 +83,10 @@ To listen for a snapshot and it's siblingKey. This is useful events like `.Child
 Cool hint: You can name parts of your tuple to make things easier
 
 ```swift
-    let query = FIRDatabase.database().reference(...).queryOrderedByChild("height")
+    let query = Database.database().reference(...).queryOrderedByChild("height")
 
     query.rx_observeEventType(.ChildRemoved)
-        .subscribeNext{ (tuple: (snapshot: FIRDataSnapshot, siblingKey: String?) in
+        .subscribeNext{ (tuple: (snapshot: DataSnapshot, siblingKey: String?) in
             // The tuple contains the snapshot and the sibling key
             print(tuple.snapshot)
             print(tuple.siblingKey)
@@ -96,11 +96,11 @@ Cool hint: You can name parts of your tuple to make things easier
 
 ### Observe a Snapshot Once
 
-I didn't create an observeSingleEvent rx method. Simply just do a `take(1)` on an FIRDatabaseQuery or FIRDatabaseReference.
+I didn't create an observeSingleEvent rx method. Simply just do a `take(1)` on an DatabaseQuery or DatabaseReference.
 
 ```swift
     queryOrRef.rx_observeEventType(.ChildAdded).take(1)
-        .subscribeNext{ (snapshot: FIRDataSnapshot) in
+        .subscribeNext{ (snapshot: DataSnapshot) in
             //this snapshot is fired once and the listener is disposed of as soon as it fires just once.
         }
 ```
@@ -110,21 +110,21 @@ I didn't create an observeSingleEvent rx method. Simply just do a `take(1)` on a
 These are relatively straight forward. The operate exactly like their native Firebase equivalents:
 
 ```swift
-    rx_updateChildValues(values: [NSObject : AnyObject]) -> Observable<FIRDatabaseReference>
+    rx_updateChildValues(values: [NSObject : AnyObject]) -> Observable<DatabaseReference>
 
-    rx_setValue(value: AnyObject?, priority: AnyObject? = default) -> Observable<FIRDatabaseReference>
+    rx_setValue(value: AnyObject?, priority: AnyObject? = default) -> Observable<DatabaseReference>
 
-    rx_setPriority(priority: AnyObject?) -> Observable<FIRDatabaseReference>
+    rx_setPriority(priority: AnyObject?) -> Observable<DatabaseReference>
 
-    rx_removeValue() -> Observable<FIRDatabaseReference>
+    rx_removeValue() -> Observable<DatabaseReference>
 
-    rx_runTransactionBlock(block: (FIRMutableData -> FIRTransactionResult), withLocalEvents localEvents: Bool = default) -> Observable<(Bool, FIRDataSnapshot?)>
+    rx_runTransactionBlock(block: (MutableData -> TransactionResult), withLocalEvents localEvents: Bool = default) -> Observable<(Bool, DataSnapshot?)>
 
-    rx_onDisconnectSetValue(value: AnyObject?, priority: AnyObject? = default) -> Observable<FIRDatabaseReference>
+    rx_onDisconnectSetValue(value: AnyObject?, priority: AnyObject? = default) -> Observable<DatabaseReference>
 
-    rx_onDisconnectUpdateValue(values: [NSObject : AnyObject]) -> Observable<FIRDatabaseReference>
+    rx_onDisconnectUpdateValue(values: [NSObject : AnyObject]) -> Observable<DatabaseReference>
 
-    rx_onDisconnectRemoveValue() -> Observable<FIRDatabaseReference>
+    rx_onDisconnectRemoveValue() -> Observable<DatabaseReference>
 ```
 
 ## Authentication
@@ -132,7 +132,7 @@ These are relatively straight forward. The operate exactly like their native Fir
 You can easily observe your authentication state:
 
 ```swift
-    let auth = FIRAuth.auth()?.rx_authState()
+    let auth = Auth.auth()?.rx_authState()
         .subscribeNext { user in
             if let user == user {
                 print("You're logged in, user is not nil")
@@ -142,18 +142,18 @@ You can easily observe your authentication state:
         }
 ```
 
-You can authenticate and manage the user with respective methods of FIRAuth:
+You can authenticate and manage the user with respective methods of Auth:
 
 ```swift
-    rx_signInWithEmail(email: String, password: String) -> Observable<FIRUser?>
+    rx_signInWithEmail(email: String, password: String) -> Observable<User?>
 
-    rx_signInAnonymously() -> Observable<FIRUser?>
+    rx_signInAnonymously() -> Observable<User?>
 
-    rx_signInWithCredential(credential: FIRAuthCredential) -> Observable<FIRUser?>
+    rx_signInWithCredential(credential: AuthCredential) -> Observable<User?>
 
-    rx_signInWithCustomToken(customToken: String) -> Observable<FIRUser?>
+    rx_signInWithCustomToken(customToken: String) -> Observable<User?>
 
-    rx_createUserWithEmail(email: String, password: String) -> Observable<FIRUser?>
+    rx_createUserWithEmail(email: String, password: String) -> Observable<User?>
 
     rx_sendPasswordResetWithEmail(email: String) -> Observable<Void>
 
@@ -166,7 +166,7 @@ More authentication methods (account linking, etc.) to come!
 
 ## Convenience methods
 
-You can check if a snapshot has a value or not by these two extension methods. They operate on `Observable<FIRDataSnapshot>`
+You can check if a snapshot has a value or not by these two extension methods. They operate on `Observable<DataSnapshot>`
 
 - `rx_filterWhenExists()`
 - `rx_filterWhenNotExists()`

@@ -6,44 +6,44 @@
 import FirebaseDatabase
 import RxSwift
 
-public extension FIRDatabaseReference {
+public extension DatabaseReference {
     // MARK: - Updating references
-    func rx_updateChildValues(values: [NSObject: AnyObject]) -> Observable<FIRDatabaseReference> {
-        return Observable.create { (observer: AnyObserver<FIRDatabaseReference>) in
-            self.updateChildValues(values, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
+    func rx_updateChildValues(values: [NSObject: AnyObject]) -> Observable<DatabaseReference> {
+        return Observable.create { (observer: AnyObserver<DatabaseReference>) in
+            self.updateChildValues(values, withCompletionBlock: DatabaseReference.rx_setCallback(observer: observer))
             return Disposables.create()
         }
     }
 
-    func rx_setValue(value: AnyObject?, priority: AnyObject? = nil) -> Observable<FIRDatabaseReference> {
-        return Observable.create { (observer: AnyObserver<FIRDatabaseReference>) -> Disposable in
+    func rx_setValue(value: AnyObject?, priority: AnyObject? = nil) -> Observable<DatabaseReference> {
+        return Observable.create { (observer: AnyObserver<DatabaseReference>) -> Disposable in
             if let priority = priority {
-                self.setValue(value, andPriority: priority, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
+                self.setValue(value, andPriority: priority, withCompletionBlock: DatabaseReference.rx_setCallback(observer: observer))
             } else {
-                self.setValue(value, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
+                self.setValue(value, withCompletionBlock: DatabaseReference.rx_setCallback(observer: observer))
             }
 
             return Disposables.create()
         }
     }
 
-    func rx_setPriority(priority: AnyObject?) -> Observable<FIRDatabaseReference> {
-        return Observable.create { (observer: AnyObserver<FIRDatabaseReference>) in
-            self.setPriority(priority, withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
+    func rx_setPriority(priority: AnyObject?) -> Observable<DatabaseReference> {
+        return Observable.create { (observer: AnyObserver<DatabaseReference>) in
+            self.setPriority(priority, withCompletionBlock: DatabaseReference.rx_setCallback(observer: observer))
             return Disposables.create()
         }
     }
 
-    func rx_removeValue() -> Observable<FIRDatabaseReference> {
-        return Observable.create { (observer: AnyObserver<FIRDatabaseReference>) in
-            self.removeValue(completionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
+    func rx_removeValue() -> Observable<DatabaseReference> {
+        return Observable.create { (observer: AnyObserver<DatabaseReference>) in
+            self.removeValue(completionBlock: DatabaseReference.rx_setCallback(observer: observer))
             return Disposables.create()
         }
     }
 
     // MARK: - Transactions
-    func rx_runTransactionBlock(block: @escaping ((FIRMutableData) -> FIRTransactionResult), withLocalEvents localEvents: Bool = false) -> Observable<(Bool, FIRDataSnapshot?)> {
-        return Observable.create { (observer: AnyObserver<(Bool, FIRDataSnapshot?)>) in
+    func rx_runTransactionBlock(block: @escaping ((MutableData) -> TransactionResult), withLocalEvents localEvents: Bool = false) -> Observable<(Bool, DataSnapshot?)> {
+        return Observable.create { (observer: AnyObserver<(Bool, DataSnapshot?)>) in
             self.runTransactionBlock(block, andCompletionBlock: { (error, isCommitted, snapshot) in
                 if let error = error {
                     observer.onError(error)
@@ -58,42 +58,42 @@ public extension FIRDatabaseReference {
     }
 
     // MARK: - Disconnect handling
-    func rx_onDisconnectSetValue(value: AnyObject?, priority: AnyObject? = nil) -> Observable<FIRDatabaseReference> {
+    func rx_onDisconnectSetValue(value: AnyObject?, priority: AnyObject? = nil) -> Observable<DatabaseReference> {
         return Observable.create { (observer) -> Disposable in
             if let priority = priority {
                 self.onDisconnectSetValue(value,
                     andPriority: priority,
-                    withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
+                    withCompletionBlock: DatabaseReference.rx_setCallback(observer: observer))
 
                 return Disposables.create()
             } else {
                 self.onDisconnectSetValue(value,
-                    withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
+                    withCompletionBlock: DatabaseReference.rx_setCallback(observer: observer))
 
                 return Disposables.create()
             }
         }
     }
 
-    func rx_onDisconnectUpdateValue(values: [NSObject: AnyObject]) -> Observable<FIRDatabaseReference> {
+    func rx_onDisconnectUpdateValue(values: [NSObject: AnyObject]) -> Observable<DatabaseReference> {
         return Observable.create { (observer) -> Disposable in
             self.onDisconnectUpdateChildValues(values,
-                withCompletionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
+                withCompletionBlock: DatabaseReference.rx_setCallback(observer: observer))
 
             return Disposables.create()
         }
     }
 
-    func rx_onDisconnectRemoveValue() -> Observable<FIRDatabaseReference> {
+    func rx_onDisconnectRemoveValue() -> Observable<DatabaseReference> {
         return Observable.create { (observer) -> Disposable in
-            self.onDisconnectRemoveValue(completionBlock: FIRDatabaseReference.rx_setCallback(observer: observer))
+            self.onDisconnectRemoveValue(completionBlock: DatabaseReference.rx_setCallback(observer: observer))
             return Disposables.create()
         }
     }
 
     // MARK: - Helper methods
-    private static func rx_setCallback(observer: AnyObserver<FIRDatabaseReference>) -> ((Error?, FIRDatabaseReference) -> Void) {
-        return { (error: Error?, reference: FIRDatabaseReference) in
+    private static func rx_setCallback(observer: AnyObserver<DatabaseReference>) -> ((Error?, DatabaseReference) -> Void) {
+        return { (error: Error?, reference: DatabaseReference) in
             if let error = error {
                 observer.onError(error)
             } else {
