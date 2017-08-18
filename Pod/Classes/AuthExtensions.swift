@@ -6,7 +6,9 @@
 import FirebaseAuth
 import RxSwift
 
-public let ErrorCodeUnknownError = 9000
+enum AuthError:Int {
+    case unknown = 90001
+}
 
 public extension Auth {
     // MARK: - Observable authentication state
@@ -106,7 +108,7 @@ public extension Auth {
     private static func rx_authCallback(single: @escaping ((SingleEvent<FirebaseAuth.User>) -> ())) -> AuthResultCallback {
         return { (user: FirebaseAuth.User?, error: Error?) in
             guard let user = user else {
-                single(.error(error ?? NSError(domain: "FirebaseRxSwiftExtensions", code: ErrorCodeUnknownError,
+                single(.error(error ?? NSError(domain: "FirebaseRxSwiftExtensions", code: AuthError.unknown.rawValue,
                                                userInfo: nil)))
                 return;
             }
