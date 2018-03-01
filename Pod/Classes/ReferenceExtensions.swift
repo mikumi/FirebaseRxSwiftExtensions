@@ -48,7 +48,7 @@ public extension DatabaseReference {
                 if let error = error {
                     single(.error(error))
                 } else {
-                    single(.success(isCommitted, snapshot))
+                    single(.success((isCommitted, snapshot)))
                 }
             }, withLocalEvents: localEvents)
 
