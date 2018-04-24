@@ -26,12 +26,14 @@ Pod::Spec.new do |s|
   s.source_files = 'Pod/Classes/**/*'
   s.platform = :ios, '8.0'
 
-  s.dependency 'Firebase/Auth'
-  s.dependency 'Firebase/Core'
+  s.dependency 'RxSwift', '~> 4'
   s.dependency 'Firebase/Database'
-  s.dependency 'RxSwift', '~> 3.2'
-  s.pod_target_xcconfig = {
-   'FRAMEWORK_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/**',
-   'OTHER_LDFLAGS'          => '$(inherited) -undefined dynamic_lookup'
-  }
+  s.dependency 'Firebase/Auth'
+  s.dependency 'Firebase/Analytics'
+  s.dependency 'Firebase/RemoteConfig'
+  s.dependency 'Firebase/Storage'
+
+  s.cocoapods_version = '>= 1.4.0'
+  s.swift_version = '4.0'
+  s.static_framework = true
 end
